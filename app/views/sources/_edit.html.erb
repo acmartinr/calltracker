@@ -1,0 +1,23 @@
+<%= form_for :source, url: source_path, method: :put, remote: true do |f| %>
+  <table class="table" id="sources_table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_user.sources.each do |source| %>
+        <tr id='<%= source.name%>'>
+          <% if source.id == @source.id %>
+            <td><%= f.text_field :name, class: 'form-control' %></td>
+            <td style="vertical-align: top;"><%= f.submit 'Update', class: 'btn btn-primary' %></td>
+          <% else %>
+            <td><%= source.name%></td>
+            <td><%= link_to 'Edit', edit_source_path(id: source.id), remote: true, style: 'color:black;' %> / <%= link_to 'Delete', sources_path(id: source.id), method: :delete, remote: true, style: 'color:black;' %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

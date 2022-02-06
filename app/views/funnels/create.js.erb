@@ -1,0 +1,14 @@
+<% if @error %>
+  <% if @funnel %>
+<% messages = @funnel.errors.map { |key, message| content_tag(:li, message) }.join.html_safe %>
+    <% flash[:error] = messages %>
+    $("#flash_messages").replaceWith("<div id='flash_messages'> <%= j render partial: 'flash_messages' %> </div>");
+    <% @funnel.errors.details.each do |key, message| %>
+      $("#funnel_<%= key %>").addClass('is-invalid');
+    <% end %>
+  <% else %>
+    $("#flash_messages").replaceWith("<div id='flash_messages'> <%= j render partial: 'flash_messages' %> </div>");
+  <% end %>
+<% else %>
+  $("#dashboard_workspace").replaceWith("<div id='dashboard_workspace'> <%= j render partial: 'index' %> </div>");
+<% end %>

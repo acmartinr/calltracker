@@ -1,0 +1,119 @@
+<div id="campaigns_table" class="display-single_element">
+  <%= form_for :campaign, url: campaigns_path(@campaign), method: :post, remote: true do |f| %>
+    <% current_user.campaigns.each do |campaign| %>
+      <% if campaign.id.blank? %>
+      <div class="row">
+        
+        <div class="form-group col-md-6">
+          <label for='' class="col-form-label">Name</label>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+        <div class="from-group col-md-6">
+          <div class="selectOptions">
+            <label for='' class="col-form-label">Vertical</label>
+            <%= f.select :vertical_id, current_user.verticals.collect { |v| [ v.name, v.id ] }, { prompt: 'Select Vertical' }, class: 'form-control select-drop' %>
+          </div>
+        </div>
+        <div class="from-group col-md-6">
+          <div class="selectOptions">
+            <label for='' class="col-form-label">Type</label>
+            <%= f.select :campaign_type, Campaign.campaign_types.keys.map { |k| [ k.humanize.titleize, k ] }, { prompt: 'Select Type' }, class: 'form-control select-drop' %>
+          </div>
+          <div id='buyer_email' style='display:none;'>
+            <label for='' class="col-form-label">Buyer's Email</label>
+            <%= email_field_tag 'buyer_email', nil, placeholder: "Buyer's Email (Required)", class: 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for='' class="col-form-label">Client DID</label>
+          <%= f.telephone_field :client_did, class: 'form-control', placeholder: 'Phone Number To Call' %>
+        </div>
+        
+        <div class="form-group col-md-6">
+          <label for='' class="col-form-label">Call Time (Pacific)</label><br />
+          <%= f.time_select :schedule_start, { prompt: { hour: 'Start Hr', minute: 'Start Min' }, minute_step: 5, time_separator: '', ampm: true }, class: 'form-control select-drop' %>
+          <%= f.time_select :schedule_end, { prompt: { hour: 'End Hr', minute: 'End Min' }, minute_step: 5, time_separator: '', ampm: true }, class: 'form-control select-drop' %>
+        </div>
+        
+        <div class="form-group col-md-12">
+          <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card card-accordion">
+              <div class="card-header" role="tab" id="heading1">
+                <h6 class="mb-0">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="collapsed" aria-expanded="false" aria-controls="collapse1">
+                    State Blocking
+                  </a>
+                </h6>
+              </div>
+              <div id="collapse1" class="collapse" role="tabpanel" aria-labelledby="heading1">
+                <div class="card-block" style="border-width: 0px;">
+                  <%= f.collection_check_boxes :blocked_states, states, :first, :last do |b| %>
+                    <div class="form-group col-md-3 float-left">
+                      <%= b.check_box class: 'checkbox-custom form-check-input' %>
+                      <%= b.label class: 'checkbox-custom-label form-check-label' %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="form-group col-md-4">
+          <label for='' class="col-form-label">Order Total</label>
+          <%= f.number_field :order_total, class: 'form-control' %>
+        </div>        
+        <div class="form-group col-md-4">
+          <label for='' class="col-form-label">Daily Call Limit</label>
+          <%= f.number_field :daily_call_limit, class: 'form-control' %>
+        </div>        
+        <div class="form-group col-md-4">
+          <label for='' class="col-form-label">Concurrent Call Limit</label>
+          <%= f.number_field :concurrent_call_limit, class: 'form-control', value: '1', min: 1, max: 10 %>
+        </div>
+        
+        <div class="form-group col-md-4">
+          <label for='' class="col-form-label">Buyer Balance</label>
+          <%= f.number_field :buyer_balance, class: 'form-control' %>
+        </div>        
+        <div class="form-group col-md-4">
+          <label for='' class="col-form-label">Buffer (seconds)</label>
+          <%= f.number_field :buffer, class: 'form-control', value: '20', min: 1, max: 10800 %>
+        </div>        
+        <div class="form-group col-md-4">
+          <label for='' class="col-form-label">Lead Cost</label>
+          <%= f.number_field :lead_cost, class: 'form-control' %>
+        </div>
+           
+        <div class="from-group">
+          <div class="col-md-6 offset-md-1">
+            <%= button_tag 'Create', class: 'btn btn-primary btn-default card-btn', data: { disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Create" } do %>
+              <i class="fa fa-circle-o-notch"></i> Create
+            <% end %>
+          </div>
+        </div>
+        
+      </div>
+      <% else %>
+      
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#campaign_campaign_type").selectbox( {
+      onChange: function (val, inst) {
+        //console.log(val);
+        if (val == 'buyer') {
+          //alert("BUYER!");
+          $('#buyer_email').show();
+        } else {
+          $('#buyer_email').hide();
+        }
+      }
+    })
+  })
+</script>

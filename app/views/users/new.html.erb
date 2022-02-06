@@ -1,0 +1,45 @@
+<section class="lightSection clearfix pageHeader">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="page-title">
+          <h2>sign up</h2>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <ol class="breadcrumb float-right">
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li class="active">sign up</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT SECTION -->
+<section class="mainContent clearfix signUp">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3>sign up</h3></div>
+          <div class="panel-body">
+            <div id="signup_messages">
+            </div>
+            <%= render partial: '/users/signup_form' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%= render partial: 'footer' %>
+
+<!-- LOGIN MODAL -->
+<%= render partial: '/sessions/login_modal' %>
+
+<!-- SIGN UP MODAL -->
+<%= render partial: '/users/signup_modal' %>

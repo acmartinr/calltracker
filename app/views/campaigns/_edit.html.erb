@@ -1,0 +1,105 @@
+<div id="campaigns_table" class="display-single_element">
+  <%= form_for :campaign, url: campaign_path, method: :put, remote: true do |f| %>         
+    <div class="row">
+
+      <div class="form-group col-md-6">
+        <label for='' class="col-form-label">Name</label>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="from-group col-md-6">
+        <div class="selectOptions">
+          <label for='' class="col-form-label">Vertical</label>
+          <%= f.select :vertical_id, current_user.verticals.collect { |v| [ v.name, v.id ] }, { prompt: 'Select Vertical' }, class: 'form-control select-drop' %>
+        </div>
+      </div>
+      <div class="from-group col-md-6">
+        <div class="selectOptions">
+          <label for='' class="col-form-label">Type</label>
+          <%= f.select :campaign_type, Campaign.campaign_types.keys.map { |k| [ k.humanize.titleize, k ] }, { prompt: 'Select Type' }, class: 'form-control select-drop' %>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for='' class="col-form-label">Client DID</label>
+        <%= f.telephone_field :client_did, class: 'form-control', placeholder: 'Phone Number To Call' %>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for='' class="col-form-label">Call Time (Pacific)</label><br />
+        <%= f.time_select :schedule_start, { prompt: { hour: 'Start Hr', minute: 'Start Min' }, minute_step: 5, time_separator: '', ampm: true }, class: 'form-control select-drop' %>
+        <%= f.time_select :schedule_end, { prompt: { hour: 'End Hr', minute: 'End Min' }, minute_step: 5, time_separator: '', ampm: true }, class: 'form-control select-drop' %>
+      </div>
+
+      <div class="from-group col-md-6">
+        <% if current_user.funnels.blank? %>
+        <div class='row'>
+          <div class="from-group col-md-6">
+            <%= link_to 'Create a funnel', funnels_path, remote: true, style: 'color:#1da3ed;font-size:15px;display:inline-block;padding-top:6px;' %>
+          </div>
+        </div>
+        <% else %>
+          <div class="selectOptions">
+            <label for='' class="col-form-label">Funnel</label>
+            <%= f.collection_select :funnel_ids, current_user.funnels, :id, :name, { prompt: 'Select Funnel' }, { class: 'form-control select-drop' } %>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="form-group col-md-12">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="card card-accordion">
+            <div class="card-header" role="tab" id="heading1">
+              <h6 class="mb-0">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="collapsed" aria-expanded="false" aria-controls="collapse1">
+                  State Blocking
+                </a>
+              </h6>
+            </div>
+            <div id="collapse1" class="collapse" role="tabpanel" aria-labelledby="heading1">
+              <div class="card-block" style="border-width: 0px;">
+                <%= f.collection_check_boxes :blocked_states, states, :first, :last do |b| %>
+                  <div class="form-group col-md-3 float-left">
+                    <%= b.check_box class: 'checkbox-custom form-check-input' %>
+                    <%= b.label class: 'checkbox-custom-label form-check-label' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for='' class="col-form-label">Order Total</label>
+        <%= f.number_field :order_total, class: 'form-control' %>
+      </div>        
+      <div class="form-group col-md-4">
+        <label for='' class="col-form-label">Daily Call Limit</label>
+        <%= f.number_field :daily_call_limit, class: 'form-control' %>
+      </div>        
+      <div class="form-group col-md-4">
+        <label for='' class="col-form-label">Concurrent Call Limit</label>
+        <%= f.number_field :concurrent_call_limit, class: 'form-control' %>
+      </div>     
+
+      <div class="form-group col-md-4">
+        <label for='' class="col-form-label">Buyer Balance</label>
+        <%= f.number_field :buyer_balance, class: 'form-control' %>
+      </div>        
+      <div class="form-group col-md-4">
+        <label for='' class="col-form-label">Buffer (seconds)</label>
+        <%= f.number_field :buffer, class: 'form-control' %>
+      </div>        
+      <div class="form-group col-md-4">
+        <label for='' class="col-form-label">Lead Cost</label>
+        <%= f.number_field :lead_cost, class: 'form-control' %>
+      </div>
+
+      <div class="from-group">
+        <div class="col-md-6 offset-md-1">
+          <%= f.submit 'Update', class: 'btn btn-primary btn-default card-btn' %>
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>

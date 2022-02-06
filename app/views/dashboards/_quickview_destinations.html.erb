@@ -1,0 +1,62 @@
+<div id="dashboard_quickview">
+  <h4>Destinations</h4>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Avg Time</th>
+          <th>Sold</th>
+          <th>Sold %</th>
+          <th>Unsold</th>
+          <th>Unsold %</th>
+          <th>Refnd Total</th>
+          <th>Refnd %</th>
+          <th>Unique Calls</th>
+          <th>Balance</th>
+          <th>DL</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if current_user.campaigns.blank? %>
+          <tr>
+            <td>No destinations</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% else %>
+          <% current_user.campaigns.each do |campaign| %>
+            <tr>
+              <td><%= link_to campaign.name, edit_campaign_path(campaign.id), remote: true, style: 'color:#1da3ed;' %></td>
+              <td><%= campaign.talk_average %> secs</td>
+              <td><%= campaign.sold_count %></td>
+              <td><%= number_to_percentage(campaign.sold_count / (campaign.contacts.size.nonzero? || 1).to_f * 100, precision: 2) %></td>
+              <td><%= number_with_delimiter(campaign.contacts.size - campaign.sold_count) %></td>
+              <td><%= number_to_percentage((campaign.contacts.size - campaign.sold_count) / (campaign.contacts.size.nonzero? || 1).to_f * 100, precision: 2) %></td>
+              <td><%= campaign.refund_count %></td>
+              <td><%= number_to_percentage(campaign.refund_count / (campaign.contacts.size.nonzero? || 1).to_f * 100, precision: 2) %></td>
+              <td><%= number_with_delimiter(campaign.contacts.size) %></td>
+              <td>N/A</td>
+              <td><%= link_to "<i class='fa fa-arrow-circle-o-down'></i>".html_safe, contact_history_campaign_path(campaign, format: :csv), style: 'color:black;' %></td>
+              <% if campaign.active? %>
+                <td><%= link_to "<i class='fa fa-toggle-on' style='color:green;'></i>".html_safe, campaign_path(id: campaign.id, 'campaign[active]' => 'false'), method: :patch %></td>
+              <% else %>
+                <td><%= link_to "<i class='fa fa-toggle-off' style='color:black;'></i>".html_safe, campaign_path(id: campaign.id, 'campaign[active]' => 'true'), method: :patch %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

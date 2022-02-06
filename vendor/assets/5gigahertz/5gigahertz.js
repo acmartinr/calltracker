@@ -1,0 +1,12 @@
+//= require plugins/bootstrap/js/popper.min
+//= require plugins/bootstrap/js/bootstrap.min
+//= require plugins/rs-plugin/js/jquery.themepunch.tools.min
+//= require plugins/rs-plugin/js/jquery.themepunch.revolution.min
+//= require plugins/slick/slick
+//= require plugins/fancybox/jquery.fancybox.min
+//= require plugins/iziToast/js/iziToast
+//= require plugins/prismjs/prism
+//= require plugins/selectbox/jquery.selectbox-0.1.3.min
+//= require plugins/countdown/jquery.syotimer
+//= require plugins/velocity/velocity.min
+//= require js/custom

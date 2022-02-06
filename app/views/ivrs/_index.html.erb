@@ -1,0 +1,37 @@
+<div id='flash_messages'>
+</div>
+<h3><%= link_to 'Dashboard', dashboard_path, remote: true, style: 'color:#1da3ed;' %> / <%= link_to 'IVR', ivrs_path, remote: true, style: 'color:#1da3ed;' %> / <%= link_to "Add New <i class='fa fa-plus-circle'></i>".html_safe, new_ivr_path, remote: true, style: 'color:#1da3ed;' %></h3>
+<p> </p>
+<div class="orderBox" id="ivrs_orderBox">
+  <h4>IVRs</h4>
+  <div class="table-responsive">
+    <table class="table" id="ivrs_table">    
+      <tbody> 
+        <% if current_user.ivrs.blank? %>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tr>
+            <td style="color:black;">Please create your first IVR at your convenience.</td>
+            <td><%= link_to "Add New <i class='fa fa-plus-circle'></i>".html_safe, new_ivr_path, remote: true, style: 'color:#1da3ed;' %></td>
+          </tr>
+        <% else %>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Funnels</th>
+              <th>Recording</th>
+              <th></th>
+            </tr>
+          </thead>
+          
+          <%= render partial: 'list_ivrs' %>
+          
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

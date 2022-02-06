@@ -1,0 +1,31 @@
+<div id="dashboard_quickview">
+  <h4>DIDs</h4>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Recording</th>
+          <th>DIDs Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if current_user.dids.blank? %>
+          <tr>
+            <td>No IVRs</td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% else %>
+          <% current_user.ivrs.each do |ivr| %>
+            <tr>
+              <td><%= ivr.name %></td>
+              <td><%= ivr.recording %></td>
+              <td><%= number_with_delimiter(ivr.did_count) %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

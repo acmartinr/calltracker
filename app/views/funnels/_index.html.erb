@@ -1,0 +1,64 @@
+<div id='flash_messages'>
+</div>
+<h3><%= link_to 'Dashboard', dashboard_path, remote: true, style: 'color:#1da3ed;' %> / <%= link_to 'Funnels', funnels_path, remote: true, style: 'color:#1da3ed;' %> / 
+  <% if current_user.campaigns.blank? %>
+    <span style='text-decoration: line-through;'>Add New <i class='fa fa-plus-circle'></i></span> (No Destinations)</h3>
+  <% else %>
+    <%= link_to "Add New <i class='fa fa-plus-circle'></i>".html_safe, new_funnel_path, remote: true, style: 'color:#1da3ed;' %></h3>
+  <% end %>
+<p> </p>
+<div class="orderBox">
+  <h4>Funnels</h4>
+  <div class="table-responsive">
+    <table class="table" id="funnels_table">
+      <tbody>
+        <% if current_user.funnels.blank? %>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <% if current_user.campaigns.blank? %>
+            <tr>
+              <td style="color:black;">Please create a destination before you create a funnel.</td>
+              <td><span style='text-decoration: line-through;'>Add New <i class='fa fa-plus-circle'></i></span></td>
+            </tr>
+          <% else %>
+            <tr>
+              <td style="color:black;">Please create your first funnel at your convenience.</td>
+              <td><%= link_to "Add New <i class='fa fa-plus-circle'></i>".html_safe, new_funnel_path, remote: true, style: 'color:#1da3ed;' %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Forwarding Number</th>
+              <th>DID</th>
+              <th>Vertical</th>
+              <th>Type</th>
+              <th>Mask Number</th>
+              <th></th>
+            </tr>
+          </thead>
+          <% current_user.funnels.each do |funnel| %>
+            <tr id='<%= funnel.name %>'>
+              <td><%= funnel.name %></td>
+              <td><%= funnel.forwarding_number %></td>
+              <td>
+                <% funnel.dids.each do |did| %>
+                  <%= number_to_phone(did.number, area_code: true) %><br />
+                <% end %>
+              </td>
+              <td><%= funnel.vertical.name unless funnel.vertical.blank? %></td>
+              <td><%= funnel.routing_type.humanize %></td>
+              <td><%= funnel.mask_number %></td>
+              <td><%= link_to 'Edit', edit_funnel_path(id: funnel.id), remote: true, style: 'color:black;' %> / <%= link_to 'Delete', funnel_path(id: funnel.id), method: :delete, remote: true, style: 'color:black;', data: { confirm: 'Are you sure? This cannot be undone.' } %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

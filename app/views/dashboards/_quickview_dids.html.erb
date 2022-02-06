@@ -1,0 +1,60 @@
+<div id="dashboard_quickview">
+  
+  <%= render partial: 'funnels/buy_bulk_dids' %>
+  
+  <%= render partial: 'filter_dids' %>
+  
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>DID</th>
+          <th>Avg Time</th>
+          <th>Sold</th>
+          <th>B Sold</th>
+          <th>V Sold</th>
+          <th>Unsold</th>
+          <th>Unique</th>
+          <th>Funnel</th>
+          <th>Vertical / Source</th>
+          <th>Export</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if current_user.dids.blank? %>
+          <tr>
+            <td>No DIDs</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% else %>
+          <% current_user.dids.includes(:funnel).each do |did| %>
+            <tr>
+              <td><%= number_to_phone(did.number, area_code: true) %></td>
+              <td>0</td>
+              <td><%= number_with_delimiter(did.sold_count) %></td>
+              <td>0</td>
+              <td>0</td>
+              <td><%= number_with_delimiter(did.calls_count - did.sold_count) %></td>
+              <td><%= number_with_delimiter(did.calls_count) %></td>
+              <td><%= did.funnel.name %></td>
+              <td><%= did.funnel.vertical.name %> / N/A</td>
+              <td><i class="fa fa-arrow-circle-o-down"></i></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id='did_flash_messages'>
+    <%= render partial: 'flash_messages' %>
+  </div>
+</div>

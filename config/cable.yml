@@ -1,0 +1,10 @@
+development:
+  adapter: redis://redistogo:3ffb526088742af69573709a3047ef5a@scat.redistogo.com:10982/
+
+test:
+  adapter: redis://redistogo:3ffb526088742af69573709a3047ef5a@scat.redistogo.com:10982/
+
+production:
+  adapter: redis
+  url: redis://redistogo:3ffb526088742af69573709a3047ef5a@scat.redistogo.com:10982/
+  channel_prefix: callrouter_production

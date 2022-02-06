@@ -1,0 +1,34 @@
+<div id="dashboard_quickview">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="innerWrapper clearfix stepsPage">
+        <div class="row progress-wizard" style="border-bottom:0;">
+          
+          <div class="col-4 progress-wizard-step complete fullBar">
+            <div class="text-center progress-wizard-stepnum">Payment Amount</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="/dashboard?button=charges" class="progress-wizard-dot"></a>
+          </div>
+          
+          <div class="col-4 progress-wizard-step complete fullBar">
+            <div class="text-center progress-wizard-stepnum">Card Info</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="/dashboard?button=charges" class="progress-wizard-dot"></a>
+          </div>
+
+          <div class="col-4 progress-wizard-step active">
+            <div class="text-center progress-wizard-stepnum">Receipt</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="/dashboard?button=charges" class="progress-wizard-dot"></a>
+          </div>
+        </div>
+
+        <div class="page-header">
+          <h4>Thank You!</h4>
+          <%= number_to_currency(current_user.charges.last.amount) %> has beed added to your account.
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+{
+  "name": "callrouter",
+  "private": true,
+  "dependencies": {
+    "jquery": "^1.9.1",
+    "popper.js": "^1.14.4"
+  },
+  "devDependencies": {
+    "bootstrap": "^4.1.3"
+  }
+}

@@ -1,0 +1,57 @@
+<div id="dashboard_quickview">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="innerWrapper clearfix stepsPage">
+        <div class="row progress-wizard" style="border-bottom:0;">
+          
+          <div class="col-4 progress-wizard-step complete fullBar">
+            <div class="text-center progress-wizard-stepnum">Payment Amount</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="/dashboard?button=charges" class="progress-wizard-dot"></a>
+          </div>
+        
+          <div class="col-4 progress-wizard-step active">
+            <div class="text-center progress-wizard-stepnum">Card Info</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="/dashboard?button=charges" class="progress-wizard-dot"></a>
+          </div>
+
+          <div class="col-4 progress-wizard-step disabled">
+            <div class="text-center progress-wizard-stepnum">Receipt</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="/dashboard?button=charges" class="progress-wizard-dot"></a>
+          </div>
+        </div>
+
+        <div class="page-header">
+          <h4>Card Information</h4>
+          <%= form_tag charges_path do %>
+            <div class="from-group">
+              <div class="col-md-6 offset-md-1">
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                  data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                  data-description="VT CallRouting Reload"
+                  data-amount="<%= session[:charge_amount] %>"
+                  data-locale="auto">                     
+                </script>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="summery-box">
+        <h4>Order Summery</h4>
+        <p>This transaction is secured with https encryption.</p>
+        <ul class="list-unstyled">
+          <li class="d-flex justify-content-between">
+            <span class="tag">Total</span>
+            <span class="val">USD  <%= number_to_currency(session[:charge_amount] / 100) %> </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

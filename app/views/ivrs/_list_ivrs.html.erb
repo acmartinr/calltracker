@@ -1,0 +1,8 @@
+<% current_user.ivrs.each_with_index do |ivr, i| %>
+  <tr id='<%= ivr.name %>'>
+    <td><%= ivr.name %></td>
+    <td><%= ivr.funnels.size %></td>
+    <td><%= ivr.recording %></td>
+    <td><%= link_to 'Edit', edit_ivr_path(id: ivr.id), remote: true, style: 'color:black;' %> / <%= link_to 'Delete', ivr_path(id: ivr.id), method: :delete, remote: true, style: 'color:black;', data: { confirm: 'Are you sure? This cannot be undone.' } %></td>
+  </tr>
+<% end %>

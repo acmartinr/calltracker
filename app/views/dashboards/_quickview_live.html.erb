@@ -1,0 +1,59 @@
+<div id="dashboard_quickview">
+  <h4>Live Calls</h4>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Destination</th>
+          <th>Destination Number</th>
+          <th>Funnel Number</th>
+          <th>Caller's Number</th>
+          <th>Call Start</th>
+          <th>Call Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% live_calls = fetch_live_calls %>
+        <% if live_calls.blank? %>
+          <tr>
+            <td>No Live Calls</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% else %>
+          <% live_calls.each do |live_call| %>
+            <tr>
+              <td><%= live_call[5] %></td>
+              <td><%= number_to_phone(live_call[0], area_code: true) %></td>
+              <td><%= number_to_phone(live_call[4], area_code: true) %></td>
+              <td><%= number_to_phone(live_call[2], area_code: true) %></td>
+              <td><%= live_call[3].to_i.seconds.ago.strftime('%r') %>
+              <td><%= Time.at(live_call[3].to_i).utc.strftime("%H:%M:%S") %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    $(function() {
+      var live_call_refresh;
+      $(document).ready(function() {
+        live_call_refresh = setTimeout(function() {
+          jQuery.ajax({
+            url: "/dashboard?button=live",
+            type: "GET",
+            dataType: "script"
+          });
+        }, 6000); // In every 6 seconds
+      });
+      $(document).click(function() {
+        //console.log("Click recorded.");
+        clearTimeout(live_call_refresh);
+      });
+    });
+  </script>
+</div>

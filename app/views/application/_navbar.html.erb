@@ -1,0 +1,42 @@
+<a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">dashboard</a>
+<ul class="dropdown-menu dropdown-menu-left">
+  <li class=""><%= link_to 'Dashboard', dashboard_url, data: { turbolinks: false } %></li>
+</ul>
+</li>
+<% unless current_user.buyer? %>
+  <li class="nav-item dropdown megaDropMenu ">
+    <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">setup</b></a>
+    <ul class="dropdown-menu row">
+      <li class="col-md-6 col-12">
+        <ul class="list-unstyled">
+          <li>Create Settings</li>
+          <li class=""><%= link_to '<i class="fa fa-group" aria-hidden="true"></i> New Destination'.html_safe, campaigns_path, remote: true %></li>
+          <li class=""><%= link_to '<i class="fa fa-arrows-v" aria-hidden="true"></i> New Vertical'.html_safe, verticals_path, remote: true %></li>
+          <li class=""><%= link_to '<i class="fa fa-plus-circle" aria-hidden="true"></i> New Source'.html_safe, sources_path, remote: true %></li>
+          <li class=""><%= link_to '<i class="fa fa-filter" aria-hidden="true"></i> New Funnel'.html_safe, funnels_path, remote: true %></li>
+        </ul>
+      </li>
+      <li class="col-md-6 col-12">
+        <ul class="list-unstyled">
+          <li>Call Distribution</li>
+          <li class=""><%= link_to 'IVR', ivrs_path, remote: true %></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">funnels</a>
+    <ul class="dropdown-menu dropdown-menu-left">
+      <li class=""><%= link_to 'View Funnels', funnels_path, remote: true %></li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">reports</a>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li class=""><%= link_to 'Destinations', dashboard_path, remote: true %></li>
+      <li class=""><%= link_to 'DIDs', dashboard_path(button: 'dids'), remote: true %></li>
+      <li class=""><%= link_to 'Verticals', dashboard_path(button: 'verticals'), remote: true %></li>
+  		<li class=""><%= link_to 'Sources', dashboard_path(button: 'sources'), remote: true %></li>
+    </ul>
+  </li>
+<% end %>

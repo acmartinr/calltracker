@@ -1,0 +1,55 @@
+<!-- LIGHT SECTION -->
+<section class="lightSection clearfix pageHeader">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="page-title">
+          <h2>New Password</h2>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <ol class="breadcrumb float-right">
+          <li>
+            <%= link_to 'Home', welcome_url, data: { turbolinks: false } %>
+          </li>
+          <li class="active">New Password</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT SECTION -->
+<section class="mainContent clearfix logIn">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-7 col-lg-8 col-xl-7 col-12">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3>New Password</h3></div>
+          <div class="panel-body">
+            <%= form_for :reset, url: passwordreset_path do |f| %>
+              <%= f.hidden_field :reset_token, value: @user.password_reset_token %>
+              <div class="form-group">
+                <label for="">New Password</label>
+                <%= f.password_field :password, class: 'form-control', placeholder: 'Must have at least 8 characters' %>
+              </div>
+              <div class="form-group">
+                <label for="">Confirm Password</label>
+                <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Must match your new password' %>
+              </div>
+              <%= f.submit 'Submit', class: 'btn btn-primary btn-block' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%= render partial: 'footer' %>
+
+<!-- LOGIN MODAL -->
+<%= render partial: '/sessions/login_modal' %>
+
+<!-- SIGN UP MODAL -->
+<%= render partial: '/users/signup_modal' %>

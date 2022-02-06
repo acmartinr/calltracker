@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Callrouter</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body class="body-wrapper version1">
+
+    <!-- Preloader -->
+    <div id="preloader" class="smooth-loader-wrapper">
+      <div class="preloader_container">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+      </div>
+    </div>
+
+    <div class="main-wrapper">
+      <!-- HEADER -->
+      <div class="header clearfix">
+        
+          <!-- TOPBAR -->
+          <div class="topBar">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6 d-none d-md-block">
+                  <ul class="list-inline">
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                    <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-12">
+                  <ul class="list-inline float-right top-right">
+                    <li class="account-login">
+                      <span>
+                        <% if current_user %>
+                          <%= link_to "Log out", '/logout', data: { turbolinks: false } %>
+                        <% else %>
+                          <%= link_to 'Log in', '#login', data: { toggle: 'modal' } %>
+                          <small>or</small>
+                          <%= link_to 'Create an account', '#signup', data: {toggle: 'modal' } %>
+                        <% end %>
+                      </span>
+                    </li>
+                    <li class="searchBox">
+                      <a href=""><i class="fa fa-envelope"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                        </li>
+                      </ul>
+                    </li>
+					<% if current_user %>
+	                    <li class="dropdown cart-dropdown">
+	                      <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-money "></i><%= number_to_currency(current_user.balance) %></a>
+	                      <ul class="dropdown-menu dropdown-menu-right">
+	                        <li>Your Balance</li>
+	                        <li>
+	                          <a href="single-product.html">
+	                            <div class="media">
+	                              <div class="media-body">
+	                                <h5 class="media-heading">Remaining <br><span><%= number_to_currency(current_user.balance, precision: 4) %></span></h5>
+	                              </div>
+	                            </div>
+	                          </a>
+	                        </li>
+	                        <li>
+	                          <div class="btn-group" role="group" aria-label="...">
+	                            <button type="button" class="btn btn-default" onclick="location.href='/dashboard?button=billing';">Detailed Billing</button>
+                              <button type="button" class="btn btn-default" onclick="location.href='/dashboard?button=charges';">Reload</button>
+	                          </div>
+	                        </li>
+	                      </ul>
+	                    </li>
+					<% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NAVBAR -->
+          <nav class="navbar navbar-main navbar-default navbar-expand-md" role="navigation">
+            <div class="container">
+              <!-- Brand and toggle get grouped for better mobile display -->
+
+              <a class="navbar-brand" href="<%=welcome_url%>">
+                <%= image_tag('vtcallroutinglogo.png', alt: 'vt routing logo', data: { turbolinks: false }) %>
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse" aria-controls="navbar-ex1-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+              </button>
+
+
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav ml-auto">
+                  <li class="nav-item dropdown">           
+                    <% if controller_name == 'dashboards' %>
+                      <%= render partial: 'navbar' %>
+                    <% else %>
+                      <%= render partial: 'welcome_navbar' %>
+                    <% end %>
+                  </li>
+                </li>
+              </ul>
+              </div><!-- /.navbar-collapse -->
+              
+              <div class="version2">
+								<% if current_user %>
+	                <div class="dropdown cart-dropdown">
+	                  <a href="javascript:void(0)" class="dropdown-toggle shop-cart" data-toggle="dropdown">
+	                    <i class="fa fa-money "></i>
+	                    <span class="badge">$</span>
+	                  </a>
+	                  <ul class="dropdown-menu dropdown-menu-right">
+	                    <li>Your Balance</li>
+	                    <li>
+	                      <a href="#">
+	                        <div class="media">
+	                          <div class="media-body">
+	                            <h5 class="media-heading">Remaining<br><span><%= number_to_currency(current_user.balance, precision: 4) %></span></h5>
+	                          </div>
+	                        </div>
+	                      </a>
+	                    </li>
+	                    <li>
+	                      <div class="btn-group" role="group" aria-label="...">
+	                        <button type="button" class="btn btn-default" onclick="location.href='/dashboard?button=billing';">Detailed Billing</button>
+	                        <button type="button" class="btn btn-default" onclick="location.href='/dashboard?button=charges';">Reload</button>
+	                      </div>
+	                    </li>
+	                  </ul>
+	                </div>
+								<% end %>
+              </div>
+            </div>
+          </nav>
+        </div>
+    <%= yield %>
+  </body>
+</html>

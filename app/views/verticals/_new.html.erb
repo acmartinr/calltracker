@@ -1,0 +1,25 @@
+<%= form_for :vertical, url: verticals_path(@vertical), method: :post, remote: true do |f| %>
+  <table class="table" id="verticals_table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_user.verticals.each do |vertical| %>
+        <% if vertical.id.blank? %>
+          <tr>
+            <td><%= f.text_field :name, class: 'form-control' %></td>
+            <td style="vertical-align: top;"><%= f.submit 'Create', class: 'btn btn-primary' %></td>
+          </tr>
+        <% else %>
+        <tr id='<%= vertical.name%>'>
+          <td><%= vertical.name%></td>
+          <td><%= link_to 'Edit', edit_vertical_path(id: vertical.id), remote: true, style: 'color:black;' %> / <%= link_to 'Delete', verticals_path(id: vertical.id), method: :delete, remote: true, style: 'color:black;' %></td>
+        </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

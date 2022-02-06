@@ -1,0 +1,101 @@
+<div id="campaigns_table" class="display-single_element">
+  <%= form_for @funnel, url: funnels_path(@funnel), method: :post, remote: true do |f| %>
+    <div class="row" id="funnels_table">    
+      <div class="form-group col-md-6">
+        <label for='' class="col-form-label">Name</label>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="form-group col-md-6"> 
+        <label for='' class="col-form-label">Forwarding Number (Optional)</label>
+        <%= f.telephone_field :forwarding_number, class: 'form-control' %>
+      </div>
+      <div class="from-group col-md-6">
+        <div class="selectOptions">
+          <label for='' class="col-form-label">Vertical</label>
+          <%= f.select :vertical_id, current_user.verticals.collect { |v| [ v.name, v.id ] }, { prompt: 'Select Vertical' }, class: 'form-control select-drop' %>
+        </div>
+      </div>         
+      <div class="from-group col-md-6">
+        <div class="selectOptions">
+          <label for='' class="col-form-label">Routing Type</label>
+          <%= f.select :routing_type, Funnel.routing_types.keys.map { |f| [ f.humanize.titleize, f ] }, { prompt: 'Select Routing Type' }, class: 'form-control select-drop' %>
+        </div>
+      </div>
+      <div class="from-group col-md-6">
+        <% if current_user.campaigns.blank? %>
+          <p></p>
+        <% else %>
+          <div class='display-single_element'>
+            <p style='color:black;font-size:15px;margin-top:30px;'>Destinations</p>
+            <div class='row'>
+              <%= f.collection_check_boxes :campaign_ids, current_user.campaigns, :id, :name do |b| %>
+                <div class="form-group col-md-6">
+                  <%= b.check_box class: 'checkbox-custom form-check-input' %>
+                  <%= b.label class: 'checkbox-custom-label form-check-label' %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="from-group col-md-6">
+        <div class='display-single_element'>
+          <p style='color:black;font-size:15px;margin-top:30px;'>Options</p>
+          <div class='row'>
+            <div class="from-group col-md-6">
+              <%= f.check_box :mask_number, class: 'checkbox-custom form-check-input' %>
+              <label for='' class="checkbox-custom-label form-check-label">Mask Number</label>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="from-group col-md-6">
+        <div class="selectOptions">
+          <label for='' class="col-form-label">Select/Buy Single Inbound DID</label>
+            <%= f.select :did_ids, Did.where(funnel_id: nil).order(Arel.sql('RAND()')).limit(6).collect { |d| [ number_to_phone(d.number, area_code: true), d.id ] }, { prompt: 'Pick An Available DID' }, class: 'form-control select-drop' %>
+        </div>
+      </div>
+      <div class="from-group col-md-6">
+        <label for='' class="col-form-label">Buy Bulk DIDs (max 1000, emailed CSV report)</label>
+        <%= f.number_field :bulk_dids, class: 'form-control', value: '0', min: 0, max: 1000 %>
+        
+        
+          <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card card-accordion">
+              <div class="card-header" role="tab" id="heading1">
+                <h6 class="mb-0">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="collapsed" aria-expanded="false" aria-controls="collapse1">
+                    Buy Bulk DIDs Advanced Options
+                  </a>
+                </h6>
+              </div>
+              <div id="collapse1" class="collapse" role="tabpanel" aria-labelledby="heading1">
+                <div class="card-block" style="border-width: 0px;">
+                  <%= f.check_box :toll_free, class: 'checkbox-custom form-check-input' %>
+                  <label for='' class="checkbox-custom-label form-check-label">Toll Free DIDs</label>
+                </div>
+                <label for='' class="col-form-label">Select States (Local DIDs Only)</label>
+                <div class="card-block" style="border-width: 0px;">
+                  <%= f.collection_check_boxes :selected_states, states, :first, :first do |b| %>
+                    <div class="form-group col-md-3 float-left">
+                      <%= b.check_box class: 'checkbox-custom form-check-input' %>
+                      <%= b.label class: 'checkbox-custom-label form-check-label' %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="from-group col-md-12">
+        <p></p>
+      </div>
+      <div class="from-group">
+        <div class="col-md-6 offset-md-1">
+          <%= f.submit 'Create', class: 'btn btn-primary btn-default card-btn' %>
+        </div>
+      </div>    
+    </div>
+  <% end %>
+</div>

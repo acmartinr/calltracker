@@ -1,0 +1,8 @@
+<h3>Welcome <span style="text-transform: none;"><%= current_user.email %></span></h3>
+  <%= setup_status %>
+<div id="quickview_menu">
+  <%= render partial: 'quickview_menu' unless current_user.buyer? %>
+</div>
+<div class="orderBox">
+  <%= render partial: "quickview_#{@active}" %>
+</div>

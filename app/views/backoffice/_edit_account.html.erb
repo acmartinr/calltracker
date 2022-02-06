@@ -1,0 +1,40 @@
+<h3>Edit Account: <%= @account.email %></h3>
+<div class="orderBox">
+  <div id='backoffice_messages'></div>
+    <% if @account.blank? %>
+      <p>There is no user with this account ID.</p>
+    <% else %>
+      <%= form_for @account, url: backoffice_path, method: :patch, remote: true, as: :account do |f| %>
+        <div class="row">
+          <%= f.hidden_field :id, value: @account.id %>
+          <div class="form-group col-md-6">
+            <label for='' class="col-form-label">Name</label>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+          <div class="form-group col-md-6"> 
+            <label for='' class="col-form-label">Email</label>
+            <%= f.email_field :email, class: 'form-control' %>
+          </div>
+          <div class="form-group col-md-6"> 
+            <label for='' class="col-form-label">Balance</label>
+            <%= f.number_field :balance, step: 0.01, class: 'form-control' %>
+          </div>
+          <div class="form-group col-md-6"> 
+            <label for='' class="col-form-label">Billing Rate</label>
+            <%= f.number_field :billing_rate, step: 0.0001, class: 'form-control' %>
+          </div>
+          <div class="from-group">
+            <div class="col-md-6 offset-md-1">
+              <%= f.submit 'Update', class: 'btn btn-primary btn-default card-btn' %>
+            </div>
+          </div>
+          <div class="col-md-6 offset-md-1">
+            <div class="btn btn-primary card-btn">
+              <%= link_to 'Back to Accounts', backoffice_url, data: { turbolinks: false } %>
+            </div>
+          </div>  
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

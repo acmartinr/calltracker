@@ -1,0 +1,41 @@
+<div id="dashboard_quickview">
+  <h4>Verticals</h4>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Avg Time</th>
+          <th>Sold</th>
+          <th>Unsold</th>
+          <th>Unique</th>
+          <th>Export</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if current_user.verticals.blank? %>
+          <tr>
+            <td>No verticals</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% else %>
+          <% current_user.verticals.each do |vertical| %>
+            <tr>
+              <td><%= link_to vertical.name, edit_vertical_path(vertical.id), remote: true, style: 'color:#1da3ed;' %></td>
+              <td>0</td>
+              <td><%= number_with_delimiter(vertical.sold_count) %></td>
+              <td><%= number_with_delimiter(vertical.calls_count - vertical.sold_count) %></td>
+              <td><%= number_with_delimiter(vertical.calls_count) %></td>
+              <td><i class="fa fa-arrow-circle-o-down"></i></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

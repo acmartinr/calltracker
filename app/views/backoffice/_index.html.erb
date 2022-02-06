@@ -1,0 +1,80 @@
+<h3>Backoffice Administration</h3>
+<div class="orderBox">
+  <div id='backoffice_messages'></div>
+  <div class="row">
+    <div class="form-group col-md-4"> 
+      <%= form_for @global_billing, remote: true do |f| %>
+        <%= f.label 'Default Biling Rate:' %>
+        <%= f.number_field :value, step: 0.0001, class: 'form-control' %>
+        <%= f.submit 'Save', class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+    <div class="form-group col-md-4">
+      <%= form_for @billing_reminder, remote: true do |f| %>
+        <%= f.label 'Send Billing Reminder When Below:' %>
+        <%= f.number_field :value, min: 0, class: 'form-control' %>
+        <%= f.submit 'Save', class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+    <div class="form-group col-md-4">
+      <%= form_for @global_local_did_price, remote: true do |f| %>
+        <%= f.label 'Local DID Price:' %>
+        <%= f.number_field :value, step: 0.01, min: 0, class: 'form-control' %>
+        <%= f.submit 'Save', class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+    <div class="form-group col-md-4">
+      <%= form_for @global_tfn_price, remote: true do |f| %>
+        <%= f.label 'Toll free Price:' %>
+        <%= f.number_field :value, step: 0.01, min: 0, class: 'form-control' %>
+        <%= f.submit 'Save', class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+  </div>
+  <div><br/></div>
+  <div class="table-responsive">
+    <table class="table" id="funnels_table">
+      <tbody>
+        <% if @users.blank? %>
+          <thead>
+            <tr>
+              <th></th>
+            </tr>
+          </thead>
+          <tr>
+            <td style="color:black;">There are no user accounts in the system.</td>
+          </tr>
+        <% else %>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Buyer?</th>
+              <th>Balance</th>
+              <th>Billing Rate</th>
+              <th>Email Confirmed?</th>
+              <th>Funnels</th>
+              <th>Destinations</th>
+            </tr>
+          </thead>
+          <% @users.each do |user| %>
+            <tr id='user_<%= user.id %>'>
+              <% if user.name.blank? %>
+                <td><%= link_to( 'N/A', edit_backoffice_url(user.id), remote: true, style: 'color:#1da3ed;' )%></td>
+              <% else %>
+                <td><%= link_to( user.name, edit_backoffice_url(user.id), remote: true, style: 'color:#1da3ed;' )%></td>
+              <% end %>
+              <td><%= mail_to( user.email, user.email, style: 'color:black;' ) %></td>
+              <td><%= user.buyer %></td>
+              <td><%= number_to_currency(user.balance, precision: 4) %></td>
+              <td><%= number_to_currency(user.billing_rate, precision: 4) %></td>
+              <td><%= user.email_confirmed %></td>
+              <td><%= user.funnels.size %></td>
+              <td><%= user.campaigns.size %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

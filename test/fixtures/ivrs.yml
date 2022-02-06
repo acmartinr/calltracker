@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  belongs_to: 
+  name: MyString
+  funnel_count: 1
+
+two:
+  belongs_to: 
+  name: MyString
+  funnel_count: 1

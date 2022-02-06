@@ -1,0 +1,19 @@
+<% current_user.campaigns.each_with_index do |campaign, i| %>
+  <tr id='<%= campaign.name %>'>
+    <td><%= (i + 1) %></td>
+    <td><%= campaign.name %></td>
+    <td><%= campaign.vertical.name %></td>
+    <% if campaign.funnels.blank? %>
+      <td>No Funnels Selected</td>
+    <% else %>
+      <td>
+        <% campaign.funnels.each do |funnel| %>
+           <%= link_to funnel.name, funnels_path, remote: true, style: 'color:#1da3ed;' %><br />
+        <% end %>
+      </td>
+    <% end %>
+    <td><%= campaign.daily_call_limit %></td>
+    <td><%= number_with_delimiter(campaign.contacts.size) %></td>
+    <td><%= link_to 'Edit', edit_campaign_path(id: campaign.id), remote: true, style: 'color:black;' %> / <%= link_to 'Delete', campaign_path(id: campaign.id), method: :delete, remote: true, style: 'color:black;', data: { confirm: 'Are you sure? This cannot be undone.' } %></td>
+  </tr>
+<% end %>

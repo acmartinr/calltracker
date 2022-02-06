@@ -1,0 +1,35 @@
+<div id="dashboard_quickview">
+  <h4>Buyer View</h4>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>DID</th>
+          <th>Seconds</th>
+          <th>Hangup Cause</th>
+          <th>Refund?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @campaign.contacts.blank? %>
+          <tr>
+            <td>No Calls (Yet)</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% else %>
+          <% @campaign.contacts.each do |contact| %>
+            <tr>
+              <td><%= number_to_phone(contact.phone_number, area_code: true) %></td>
+              <td><%= contact.length_in_sec %></td>
+              <td><%= number_with_delimiter(did.sold_count) %></td>
+              <td><%= contact.term_reason %></td>
+              <td>N/A</td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

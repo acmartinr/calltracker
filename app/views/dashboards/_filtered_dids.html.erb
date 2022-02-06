@@ -1,0 +1,97 @@
+<div id="dashboard_quickview">
+  
+  <%= render partial: 'funnels/buy_bulk_dids' %>
+  
+  <%= render partial: 'filter_dids' %>
+  
+  <%= form_for :reassign_dids, url: reassign_dids_path, remote: true do |rf| %>
+      <div class="col-md-12" style="border-width: 0px;">
+        <% unless @dids.blank? %>
+        <hr />
+        <div class="selectOptions">
+          <label for='' class="col-form-label">Reassign Funnel</label>
+          <%= rf.collection_select :funnel_id, current_user.funnels, :id, :name, { prompt: 'Select Funnel' }, class: 'form-control select-drop' %>
+        </div>
+        <div class="selectOptions">
+          <label for='' class="col-form-label">Reassign Vertical</label>
+          <%= rf.collection_select :vertical_id, current_user.verticals, :id, :name, { prompt: 'Select Vertical' }, class: 'form-control select-drop' %>
+        </div>
+        <div class="selectOptions">
+          <label for='' class="col-form-label">Reassign Destinations</label>
+          <%= rf.collection_select :campaign_id, current_user.campaigns, :id, :name, { prompt: 'Select Destination' }, class: 'form-control select-drop' %>
+        </div>
+      </div>
+      <div class='row'><br /></div>
+      <div class='row'></div>
+    <% end %>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Select <button type="button" id="check_all" class="btw">All</button></th>
+            <th>DID</th>
+            <th>Avg Time</th>
+            <th>Sold</th>
+            <th>B Sold</th>
+            <th>V Sold</th>
+            <th>Unsold</th>
+            <th>Unique</th>
+            <th>Funnel</th>
+            <th>Vertical / Source</th>
+            <th>Export</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @dids.blank? %>
+            <tr>
+              <td>No DIDs Found</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          <% else %>
+            <% @dids.includes(:funnel).each do |did| %>
+              <tr>
+                <td><%= rf.check_box(:dids, { multiple: true }, did.id, false) %></td>
+                <td><%= number_to_phone(did.number, area_code: true) %></td>
+                <td>0</td>
+                <td><%= number_with_delimiter(did.sold_count) %></td>
+                <td>0</td>
+                <td>0</td>
+                <td><%= number_with_delimiter(did.calls_count - did.sold_count) %></td>
+                <td><%= number_with_delimiter(did.calls_count) %></td>
+                <td><%= did.funnel.name %></td>
+                <td><%= did.funnel.vertical.name %> / N/A</td>
+                <td><i class="fa fa-arrow-circle-o-down"></i></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class='row'><br /></div>
+    <div class="row form-group col-md-3 float-left">
+      <div id='reassign_dids_flash_messages'></div>
+      <%= button_tag 'submit', class: 'btn btn-primary btn-block', name: 'reassign_dids_button', data: { disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Filtering…" } do %>
+        <i class="fa fa-circle-o-notch"></i> Reassign DIDs
+      <% end %>
+    </div>
+  <% end %>
+  
+  <script>
+    $('#check_all').on("click", function(){
+      var cbxs = $('input[type="checkbox"]');
+      cbxs.prop("checked", !cbxs.prop("checked"));
+    });
+  </script>
+  
+</div>

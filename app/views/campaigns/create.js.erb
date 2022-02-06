@@ -1,0 +1,13 @@
+<% if @error %>
+  <% if @campaign %>
+    <% messages = @campaign.errors.details.keys.map { |attr| content_tag(:li, @campaign.errors.full_messages_for(attr).first) }.join.html_safe %>
+    <% flash[:error] = messages %>
+    $("#flash_messages").replaceWith("<div id='flash_messages'> <%= j render partial: 'flash_messages' %> </div>");
+    <% @campaign.errors.details.each do |key, message| %>
+      $("#campaign_<%= key %>").addClass('is-invalid');
+    <% end %>
+  <% end %>
+<% else %>
+  $("#dashboard_workspace").replaceWith("<div id='dashboard_workspace'> <%= j render partial: 'index' %> </div>");
+  $("#flash_messages").replaceWith("<div id='flash_messages'> <%= j render partial: 'flash_messages' %> </div>");
+<% end %>

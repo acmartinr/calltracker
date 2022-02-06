@@ -1,0 +1,41 @@
+<!-- LIGHT SECTION -->
+<section class="lightSection clearfix pageHeader">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="page-title">
+          <h2>BACKOFFICE</h2>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <ol class="breadcrumb float-right">
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li class="active">BACKOFFICE</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT SECTION -->
+<section class="mainContent clearfix userProfile">
+  <div class="container">
+    <div class="row">
+      <!-- <%= render partial: '/dashboards/menu' %> -->
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="innerWrapper">
+            <%= render partial: 'flash_messages' %>
+          <div id='backoffice_workspace'>
+            <%= render partial: 'edit_account' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%= render partial: 'footer' %>

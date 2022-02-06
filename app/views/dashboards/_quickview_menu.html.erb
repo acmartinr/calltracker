@@ -1,0 +1,9 @@
+<%= form_for :dashboard, remote: true do |b| %>
+  <div class="btn-group" role="group" aria-label="Quickview Options">
+    <%= b.button 'Destinations', value: 'destinations', class: quickview_active('destinations') %>
+    <%= b.button 'DIDs', value: 'dids', class: quickview_active('dids'), style: 'margin-left:-4px;' %>
+    <%= b.button 'Verticals', value: 'verticals', class: quickview_active('verticals'), style: 'margin-left:-4px;' %>
+    <%= b.button 'Sources', value: 'sources', class: quickview_active('sources'), style: 'margin-left:-4px;' %>
+    <%= b.button 'Live', value: 'live', class: quickview_active('live'), style: 'margin-left:-4px;' %>
+  </div>
+<% end %>

@@ -1,0 +1,51 @@
+<!-- LIGHT SECTION -->
+<section class="lightSection clearfix pageHeader">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="page-title">
+          <h2>Lost password</h2>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <ol class="breadcrumb float-right">
+          <li>
+            <%= link_to 'Home', welcome_url, data: { turbolinks: false } %>
+          </li>
+          <li class="active">Lost password</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT SECTION -->
+<section class="mainContent clearfix lostPassword">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3>Lost Password</h3></div>
+          <div class="panel-body">
+            <%= form_for(:reset, url: requestreset_path) do |f| %>
+              <p class="help-block">Enter the e-mail address associated with your account. Click submit to have your password e-mailed to you.</p>
+              <div class="form-group">
+                <%= f.label 'Enter Email' %>
+                <%= f.email_field :email, class: 'form-control' %>
+              </div>
+              <%= f.submit 'Request Reset', class: 'btn btn-primary btn-block' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%= render partial: 'footer' %>
+
+<!-- LOGIN MODAL -->
+<%= render partial: '/sessions/login_modal' %>
+
+<!-- SIGN UP MODAL -->
+<%= render partial: '/users/signup_modal' %>

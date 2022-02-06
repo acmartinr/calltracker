@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  funnel_id: 1
+  ivr_id: 1
+  rank: 1
+
+two:
+  funnel_id: 1
+  ivr_id: 1
+  rank: 1

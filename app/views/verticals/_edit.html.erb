@@ -1,0 +1,23 @@
+<%= form_for :vertical, url: vertical_path, method: :put, remote: true do |f| %>
+  <table class="table" id="verticals_table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_user.verticals.each do |vertical| %>
+        <tr id='<%= vertical.name%>'>
+          <% if vertical.id == @vertical.id %>
+            <td><%= f.text_field :name, class: 'form-control' %></td>
+            <td style="vertical-align: top;"><%= f.submit 'Update', class: 'btn btn-primary' %></td>
+          <% else %>
+            <td><%= vertical.name%></td>
+            <td><%= link_to 'Edit', edit_vertical_path(id: vertical.id), remote: true, style: 'color:black;' %> / <%= link_to 'Delete', verticals_path(id: vertical.id), method: :delete, remote: true, style: 'color:black;' %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

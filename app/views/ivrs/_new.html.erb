@@ -1,0 +1,26 @@
+<div id="ivrs_table" class="display-single_element">
+  <%= form_for :ivr, url: ivrs_path(@ivr), method: :post, remote: true do |f| %>
+    <% current_user.ivrs.each do |ivr| %>
+      <% if ivr.id.blank? %>
+      <div class="row">
+        
+        <div class="form-group col-md-6">
+          <label for='' class="col-form-label">Name</label>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+
+        <div class="from-group">
+          <div class="col-md-6 offset-md-1">
+            <%= button_tag 'Create', class: 'btn btn-primary btn-default card-btn', data: { disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Create" } do %>
+              <i class="fa fa-circle-o-notch"></i> Create
+            <% end %>
+          </div>
+        </div>
+        
+      </div>
+      <% else %>
+      
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

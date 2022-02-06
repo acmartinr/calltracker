@@ -1,0 +1,25 @@
+<%= form_for :source, url: sources_path(@source), method: :post, remote: true do |f| %>
+  <table class="table" id="sources_table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_user.sources.each do |source| %>
+        <% if source.id.blank? %>
+          <tr>
+            <td><%= f.text_field :name, class: 'form-control' %></td>
+            <td style="vertical-align: top;"><%= f.submit 'Create', class: 'btn btn-primary' %></td>
+          </tr>
+        <% else %>
+        <tr id='<%= source.name%>'>
+          <td><%= source.name%></td>
+          <td><%= link_to 'Edit', edit_source_path(id: source.id), remote: true, style: 'color:black;' %> / <%= link_to 'Delete', sources_path(id: source.id), method: :delete, remote: true, style: 'color:black;' %></td>
+        </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

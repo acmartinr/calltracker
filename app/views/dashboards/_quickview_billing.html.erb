@@ -1,0 +1,54 @@
+<div id="dashboard_quickview">
+  <h4>Billing Transactions (100)</h4>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Type</th>
+          <th>Destination</th>
+          <th>Payment ID</th>
+          <th>Customer Phone</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if current_user.charges.blank? %>
+          <tr>
+            <td>No Transactions</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% else %>
+          <% current_user.charges.recent.each do |charge| %>
+            <tr>
+              <td><%= charge.updated_at.to_formatted_s(:short) %></td>
+              <td><%= number_to_currency(charge.amount, precision: 4) %></td>
+              <% if charge.stripe_token.blank? %>
+                <td>Debit</td>
+                <td><%= charge.contact.campaign.client_did %></td>
+                <td>N/A</td>
+                <td><%= number_to_phone(charge.contact.phone_number, area_code: true) %></td>
+              <% else %>
+                <td>Credit</td>
+                <td>N/A</td>
+                <td><%= charge.stripe_token %></td>
+                <td>N/A</td>
+              <% end %>
+              <td></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

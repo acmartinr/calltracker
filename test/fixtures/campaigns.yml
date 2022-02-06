@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  type: 
+  buyer_id: 1
+  schedule: MyString
+  blocked_states: MyString
+  money_limits: MyString
+  call_center: MyString
+
+two:
+  name: MyString
+  type: 
+  buyer_id: 1
+  schedule: MyString
+  blocked_states: MyString
+  money_limits: MyString
+  call_center: MyString

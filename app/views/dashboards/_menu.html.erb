@@ -1,0 +1,16 @@
+<div class="col-xs-12">
+  <div id="dashboard_menu">
+    <div class="btn-group" role="group" aria-label="...">
+      <%= link_to '<i class="fa fa-th" aria-hidden="true"></i>Account Dashboard'.html_safe, dashboard_path, class: active(dashboard_path), remote: true %>
+      <%= link_to '<i class="fa fa-arrows-v" aria-hidden="true"></i>New Vertical'.html_safe, verticals_path, class: active(verticals_path), remote: true %>
+      <%= link_to '<i class="fa fa-plus-circle" aria-hidden="true"></i>New Source'.html_safe, sources_path, class: active(sources_path), remote: true %>
+      <%= link_to '<i class="fa fa-filter" aria-hidden="true"></i>New Funnel'.html_safe, funnels_path, class: active(funnels_path), remote: true %>
+      <a href="#" class="btn btn-default"><i class="fa fa-phone" aria-hidden="true"></i>Buy DID</a>
+      <%= link_to '<i class="fa fa-group" aria-hidden="true"></i>New Destination'.html_safe, campaigns_path, class: active(campaigns_path), remote: true %>
+      <a href="#" class="btn btn-default"><i class="fa fa-user" aria-hidden="true"></i>New Buyer</a>
+      <a href="#" class="btn btn-default"><i class="fa fa-list-alt" aria-hidden="true"></i>Reports</a>
+      <a href="#" class="btn btn-default"><i class="fa fa-bell" aria-hidden="true"></i>Live Calls</a>
+      <%#= link_to '<i class="fa fa-user" aria-hidden="true"></i>Profile'.html_safe, profile_path, class: active(profile_path) %>
+    </div>
+  </div>
+</div>

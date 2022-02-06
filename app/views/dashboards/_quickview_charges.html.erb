@@ -1,0 +1,45 @@
+<div id="dashboard_quickview">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="innerWrapper clearfix stepsPage">
+        <div class="row progress-wizard" style="border-bottom:0;">
+          
+          <div class="col-4 progress-wizard-step active">
+            <div class="text-center progress-wizard-stepnum">Payment Amount</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="/dashboard?button=charges" class="progress-wizard-dot"></a>
+          </div>
+          
+          <div class="col-4 progress-wizard-step disabled">
+            <div class="text-center progress-wizard-stepnum">Card Info</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="/dashboard?button=charges" class="progress-wizard-dot"></a>
+          </div>
+
+          <div class="col-4 progress-wizard-step disabled">
+            <div class="text-center progress-wizard-stepnum">Receipt</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="/dashboard?button=charges" class="progress-wizard-dot"></a>
+          </div>
+        </div>
+
+        <div class="page-header">
+          <h4>Fund Your Account</h4>
+          <%= form_tag charges_path, remote: true do %>
+            <div class="from-group col-md-3">
+              <%= number_field_tag 'amount', nil, class: 'form-control', min: 5, placeholder: '$' %>
+            </div>
+            <div class="from-group">
+              <div class="col-md-6 offset-md-1">
+                <%= button_tag :submit, class: 'btn btn-primary btn-default card-btn' do %>
+                   Continue <i class='fa fa-angle-right'></i>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

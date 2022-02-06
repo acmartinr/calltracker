@@ -1,0 +1,44 @@
+<%= form_for Funnel.new, url: funnel_buy_dids_path, method: :put, remote: true do |f| %>
+  <div id="bulk_dids" role="tablist" aria-multiselectable="true">
+    <div class="card card-accordion">
+      <div class="card-header" role="tab" id="heading1">
+        <h6 class="mb-0">
+          <a data-toggle="collapse" data-parent="#bulk_dids" href="#collapse1" class="collapsed" aria-expanded="false" aria-controls="collapse1">
+            Bulk Buy DIDs
+          </a>
+        </h6>
+      </div>
+      <div id="collapse1" class="collapse" role="tabpanel" aria-labelledby="collapse1">
+        <div class="card-block col-md-6" style="border-width: 0px;">
+          <label for='' class="col-form-label">Number of DIDs (max 1000, emailed CSV report)</label>
+          <%= f.number_field :bulk_dids, class: 'form-control', value: '0', min: 0, max: 1000 %>
+          <%= f.check_box :toll_free, class: 'checkbox-custom form-check-input' %>
+          <label for='' class="checkbox-custom-label form-check-label">Toll Free DIDs</label>
+          <div class="selectOptions">
+            <label for='' class="col-form-label">Funnel</label>
+            <%= f.collection_select :id, current_user.funnels, :id, :name, { prompt: 'Select Funnel' }, class: 'form-control select-drop' %>
+          </div>
+        </div>
+        <div class='row'>
+        </div>
+        <div class="card-block" style="border-width: 0px;">
+          <label for='' class="col-form-label">Select States (Local DIDs Only)</label><br />
+          <%= f.collection_check_boxes :selected_states, states, :first, :first do |b| %>
+            <div class="form-group col-md-3 float-left">
+              <%= b.check_box class: 'checkbox-custom form-check-input' %>
+              <%= b.label class: 'checkbox-custom-label form-check-label' %>
+            </div>
+          <% end %>
+        </div>
+        <div class='row'></div>
+        <div class="row form-group col-md-3 float-left">
+          <div id='bulk_buy_flash_messages'></div>
+          <%= button_tag 'submit', class: 'btn btn-primary btn-block', name: 'bulk_buy_button', data: { disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Purchasing…" } do %>
+            <i class="fa fa-circle-o-notch"></i> Purchase DIDs
+          <% end %>
+        </div>
+        <div class='row'></div>
+      </div>
+    </div>
+  </div>
+<% end %>

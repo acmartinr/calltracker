@@ -1,0 +1,44 @@
+<!-- LIGHT SECTION -->
+<section class="lightSection clearfix pageHeader">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="page-title">
+          <h2>log in</h2>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <ol class="breadcrumb float-right">
+          <li>
+            <%= link_to 'Home', welcome_url, data: { turbolinks: false } %>
+          </li>
+          <li class="active">log in</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT SECTION -->
+<section class="mainContent clearfix logIn">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-7 col-lg-8 col-xl-7 col-12">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3>log in</h3></div>
+          <div class="panel-body">
+            <%= render partial: '/sessions/login_form' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%= render partial: 'footer' %>
+
+<!-- LOGIN MODAL -->
+<%= render partial: '/sessions/login_modal' %>
+
+<!-- SIGN UP MODAL -->
+<%= render partial: '/users/signup_modal' %>
